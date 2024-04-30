@@ -62,6 +62,8 @@ const Counter = () => {
     }
   }, [dispatch]);
 
+  
+
   const decrementCounter = useCallback(async () => {
     try {
       await axios.post('http://localhost:5000/api/counter/decrement');
@@ -70,6 +72,8 @@ const Counter = () => {
       console.error(err);
     }
   }, [dispatch]);
+
+  
 
   return (
     <div>
@@ -88,14 +92,32 @@ const MyCounter = () => {
   const { state, dispatch } = useContext(CounterContext);
   const navigate = useNavigate();
 
+  const myincrementCounter = useCallback(async () => {
+    try {
+      await axios.post('http://localhost:5000/api/counter/incrementMyCount');
+      dispatch({ type: 'INCREMENT_MYCOUNT' });
+    } catch (err) {
+      console.error(err);
+    }
+  }, [dispatch]);
+
+  const mydecrementCounter = useCallback(async () => {
+    try {
+      await axios.post('http://localhost:5000/api/counter/decrementMyCount');
+      dispatch({ type: 'DECREMENT_MYCOUNT' });
+    } catch (err) {
+      console.error(err);
+    }
+  }, [dispatch]);
+
   return (
     <div>
       <h2>Counter</h2>
       <p>Count: {state.count}</p>
       <h2>My Counter</h2>
       <p>My Count: {state.myCount}</p>
-      <button onClick={() => dispatch({ type: 'INCREMENT_MYCOUNT' })}>Increment MyCount</button>
-      <button onClick={() => dispatch({ type: 'DECREMENT_MYCOUNT' })}>Decrement MyCount</button>
+      <button onClick={myincrementCounter}>Increment</button>
+      <button onClick={mydecrementCounter}>Decrement</button>
       <button onClick={() => navigate('/')}>Go to Home</button>
     </div>
   );

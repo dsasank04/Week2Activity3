@@ -70,33 +70,34 @@ app.post('/api/counter/decrement', async (req, res) => {
 // New endpoints for managing myCount
 app.post('/api/counter/incrementMyCount', async (req, res) => {
     try {
-        let counter = await Counter.findOne();
-        if (!counter) {
-            counter = new Counter();
-        }
-        counter.myCount++;
-        await counter.save();
-        res.json(counter);
+      let counter = await Counter.findOne();
+      if (!counter) {
+        counter = new Counter();
+      }
+      counter.myCount++; // ensure myCount field is incremented
+      await counter.save();
+      res.json(counter);
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: 'Server Error' });
+      console.error(err);
+      res.status(500).json({ message: 'Server Error' });
     }
-});
+  });
 
-app.post('/api/counter/decrementMyCount', async (req, res) => {
+  app.post('/api/counter/decrementMyCount', async (req, res) => {
     try {
-        let counter = await Counter.findOne();
-        if (!counter) {
-            counter = new Counter();
-        }
-        counter.myCount--;
-        await counter.save();
-        res.json(counter);
+      let counter = await Counter.findOne();
+      if (!counter) {
+        counter = new Counter();
+      }
+      counter.myCount--; // ensure myCount field is decremented
+      await counter.save();
+      console.log(counter);
+      res.json(counter);
     } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: 'Server Error' });
+      console.error(err);
+      res.status(500).json({ message: 'Server Error' });
     }
-});
+  });
 
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
